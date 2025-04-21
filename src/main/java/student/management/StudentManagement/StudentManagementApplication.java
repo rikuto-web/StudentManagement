@@ -5,10 +5,7 @@ package student.management.StudentManagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +36,7 @@ public class StudentManagementApplication {
         this.age = age;
         personalData.put(name, age);
     }
+
     //一覧表示
     @GetMapping("/userDateMap")
     @ResponseBody
@@ -46,8 +44,18 @@ public class StudentManagementApplication {
         return personalData;
     }
 
+    //名前（Key）の更新
+    @PostMapping("/upDateName")
+    public void upDateName(@RequestParam String oldKey, @RequestParam String newKey) {
+        if (personalData.containsKey(oldKey)) {
+            String value = personalData.get(oldKey);//削除するとvalueも消えるため一旦値を保管しておく
+            personalData.remove(oldKey);//削除（キー、値）
+            personalData.put(newKey, value);//キーの上書き、保管していたvalueをいれる
+        }
+    }
+}
 
-    //下記講座内容
+//下記講座内容
     /*@GetMapping("/studentInfo")
     public String getStudentInfo() {
         return name + " " + age + "歳";
@@ -80,4 +88,3 @@ public class StudentManagementApplication {
 		if (age != null) {
 			this.age = age;
 		}*/
-}
