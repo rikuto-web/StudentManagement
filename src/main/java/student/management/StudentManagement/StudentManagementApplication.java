@@ -34,6 +34,7 @@ public class StudentManagementApplication {
     public void userDate(String name, String age) {
         this.name = name;
         this.age = age;
+        
         personalData.put(name, age);
     }
 
